@@ -1,0 +1,122 @@
+.tictactoeContainer {
+	display: flex;
+	flex-direction: column;
+	// align-items: center;
+	// justify-content: space-evenly;
+	margin-top: 50px;
+
+	.tictactoeContainer__controlsContainer {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-evenly;
+
+		.tictactoeContainer__controlsContainer__board {
+			display: grid;
+			grid-template-columns: repeat(3, 100px);
+			grid-template-rows: repeat(3, 100px);
+			gap: 10px;
+
+			div {
+				background: #fff;
+				border: 1px solid #8b8b8b;
+				// float: left;
+				font-size: 50px;
+				font-weight: bold;
+				line-height: 34px;
+				height: 100px;
+				// margin-right: -1px;
+				// margin-top: -1px;
+				// padding: 0;
+				text-align: center;
+				width: 100px;
+				color: #000000;
+				line-height: 85px;
+
+				&:focus {
+					outline: none;
+				}
+			}
+		}
+
+		.tictactoeContainer__controlsContainer__buttonsContainer {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 10%;
+
+			button {
+				margin-top: 10px;
+				width: 100px;
+				height: 30px;
+				background-color: #be3333;
+				color: #ffffff;
+				border: 1px solid #ffffff;
+				cursor: pointer;
+				transition: 0.5s;
+
+				&:hover {
+					background-color: #550101;
+				}
+			}
+
+			p {
+				margin: 15px 0 5px;
+				// margin-top: 10px;
+				font-size: 12px;
+				font-weight: bold;
+			}
+
+			.disabled-button {
+				background-color: #8b8b8b55;
+				color: #ffffff;
+				border: 1px solid #ffffff;
+				cursor: default;
+
+				&:hover {
+					background-color: #8b8b8b55;
+				}
+			}
+
+			.square {
+				background: #ffffff;
+				border: 5px solid #be3333;
+				// float: left;
+				font-size: 50px;
+				font-weight: bold;
+				line-height: 34px;
+				height: 100px;
+				// margin-right: -1px;
+				// margin-top: -1px;
+				// padding: 0;
+				text-align: center;
+				width: 100px;
+				color: #000dbe;
+				line-height: 85px;
+				margin-bottom: 8px;
+			}
+
+			.square:focus {
+				outline: none;
+			}
+		}
+	}
+
+	.tictactoeContainer__winner {
+		border: 2px solid #be3333;
+		border-radius: 15px;
+		width: 50%;
+		margin: 25px;
+		align-self: center;
+
+		p {
+			font-size: 30px;
+			font-weight: bold;
+			margin: 10px;
+
+			span {
+				color: #be3333;
+			}
+		}
+	}
+}
