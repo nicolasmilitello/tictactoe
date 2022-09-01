@@ -1,0 +1,25 @@
+button {
+	margin-top: 10px;
+	width: 100px;
+	height: 30px;
+	background-color: #be3333;
+	color: #ffffff;
+	border: 1px solid #ffffff;
+	cursor: pointer;
+	transition: 0.5s;
+
+	&:hover {
+		background-color: #550101;
+	}
+}
+
+.disabled-button {
+	background-color: #8b8b8b55;
+	color: #ffffff;
+	border: 1px solid #ffffff;
+	cursor: default;
+
+	&:hover {
+		background-color: #8b8b8b55;
+	}
+}
