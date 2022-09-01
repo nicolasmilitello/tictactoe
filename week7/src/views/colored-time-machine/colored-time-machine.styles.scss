@@ -1,0 +1,101 @@
+.coloredContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	margin-top: 50px;
+
+	.coloredContainer__grid-container {
+		display: grid;
+		grid-template-columns: 100px 100px 100px 100px;
+		grid-template-rows: 100px 100px 100px 100px;
+		gap: 10px;
+		padding-left: 50px;
+		margin-right: 10%;
+
+		div {
+			border: 1px solid #000000;
+			width: 100px;
+			height: 100px;
+			cursor: pointer;
+			opacity: 50%;
+			transition: 0.5s;
+		}
+
+		div:nth-child(1) {
+			background-color: #ff0000;
+		}
+
+		div:nth-child(2) {
+			background-color: #ff5e00;
+		}
+
+		div:nth-child(3) {
+			background-color: #ffa600;
+		}
+
+		div:nth-child(4) {
+			background-color: #fbff00;
+		}
+
+		div:nth-child(5) {
+			background-color: #d0ff00;
+		}
+
+		div:nth-child(6) {
+			background-color: #b0ff00;
+		}
+
+		div:nth-child(7) {
+			background-color: #33ff00;
+		}
+
+		div:nth-child(8) {
+			background-color: #00ff73;
+		}
+
+		div:nth-child(9) {
+			background-color: #00ffaa;
+		}
+
+		div:nth-child(10) {
+			background-color: #00ffff;
+		}
+
+		div:nth-child(11) {
+			background-color: #00a2ff;
+		}
+
+		div:nth-child(12) {
+			background-color: #006eff;
+		}
+
+		div:nth-child(13) {
+			background-color: #6200ff;
+		}
+
+		div:nth-child(14) {
+			background-color: #9900ff;
+		}
+
+		div:nth-child(15) {
+			background-color: #e100ff;
+		}
+
+		div:nth-child(16) {
+			background-color: #ff0080;
+		}
+
+		.selectedSquare {
+			transition: 0.5s;
+			opacity: 100%;
+			cursor: default;
+		}
+	}
+
+	.coloredContainer__button-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 10%;
+	}
+}
