@@ -99,3 +99,25 @@
 		width: 10%;
 	}
 }
+
+@media only screen and (max-width: 675px) {
+	.coloredContainer {
+		flex-direction: column;
+
+		.coloredContainer__grid-container {
+			grid-template-columns: 75px 75px 75px 75px;
+			grid-template-rows: 75px 75px 75px 75px;
+			padding-left: 0;
+			margin: auto;
+
+			div {
+				width: 75px;
+				height: 75px;
+			}
+		}
+
+		.coloredContainer__button-container {
+			margin-top: 50px;
+		}
+	}
+}
