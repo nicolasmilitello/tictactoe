@@ -127,12 +127,18 @@ const TicTacToe = () => {
 	const goToThePreviousStep = () => {
 		if (replaying) return;
 
+		// if (winner) {
+		// 	if (counter.current.index) {
+		// 		counter.current.index = counter.current.index - 1;
+		// 	} else {
+		// 		return;
+		// 	}
+		// }
+
 		if (winner) {
-			if (counter.current.index) {
-				counter.current.index = counter.current.index - 1;
-			} else {
-				return;
-			}
+			if (!counter.current.index) return;
+
+			counter.current.index = counter.current.index - 1;
 		}
 
 		const previous = movePreviousValues(0);
