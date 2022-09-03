@@ -95,8 +95,8 @@ function ColoredTimeMachine() {
 	};
 
 	return (
-		<div className="coloredContainer">
-			<div className="coloredContainer__grid-container">
+		<div className='coloredContainer'>
+			<div className='coloredContainer__grid-container'>
 				{colorSquares.map((square) => (
 					<Square
 						key={square.id}
@@ -106,7 +106,7 @@ function ColoredTimeMachine() {
 					/>
 				))}
 			</div>
-			<div className="coloredContainer__button-container">
+			<div className='coloredContainer__button-container'>
 				{Object.values(buttons).map((button) => (
 					<Button
 						key={button.content}
