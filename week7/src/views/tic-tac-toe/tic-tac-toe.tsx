@@ -4,8 +4,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Square from '../../components/square/square';
 import Button from '../../components/button/button';
 
-//* constants
-import { WinningCombinations } from './constants/constants';
+//* constants and interface
+import {
+	WinningCombinations,
+	WinningCombinationsInterface,
+} from './constants/constants';
 
 //* custom hook
 import useTimeMachine from '../../hooks/use-time-machine/use-time-machine';
@@ -13,17 +16,8 @@ import useTimeMachine from '../../hooks/use-time-machine/use-time-machine';
 //* styles
 import './tic-tac-toe.styles.scss';
 
-//* types
-export { WinningCombinations } from './constants/constants';
-
 // types
 type SquareValue = 'x' | 'o' | '';
-
-// type WinningCombinations = {
-// 	along: number[][];
-// 	down: number[][];
-// 	diagnol: number[][];
-// };
 
 const TicTacToe = () => {
 	const [turn, setTurn] = useState('x');
@@ -51,11 +45,6 @@ const TicTacToe = () => {
 		{ canGoToThePast, canGoToTheFuture, amIThePresent },
 	] = useTimeMachine(cells);
 
-	// const [verPrevio, setVerPrevio] = useState(previousValue);
-	// useEffect(() => {
-	// 	setVerPrevio(previousValue);
-	// }, [previousValue]);
-
 	useEffect(() => {
 		if (!canGoToTheFuture) setIsInPast(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,12 +53,8 @@ const TicTacToe = () => {
 	const checkForWinner = (squares: SquareValue[]) => {
 		for (let combination in WinningCombinations) {
 			WinningCombinations[
-				combination as keyof WinningCombinations
+				combination as keyof WinningCombinationsInterface
 			].forEach((pattern) => {
-				// console.error(pattern);
-				// console.log({ pattern0: squares[pattern[0]] });
-				// console.log({ pattern1: squares[pattern[1]] });
-				// console.log({ pattern2: squares[pattern[2]] });
 				if (
 					squares[pattern[0]] !== '' &&
 					squares[pattern[1]] !== '' &&
@@ -77,7 +62,6 @@ const TicTacToe = () => {
 					squares[pattern[0]] === squares[pattern[1]] &&
 					squares[pattern[1]] === squares[pattern[2]]
 				) {
-					// console.warn('ENTRA ACÁ?');
 					setWinner(squares[pattern[0]]);
 				}
 			});
@@ -128,11 +112,9 @@ const TicTacToe = () => {
 		if (replaying) return;
 
 		if (winner) {
-			if (counter.current.index) {
-				counter.current.index = counter.current.index - 1;
-			} else {
-				return;
-			}
+			if (!counter.current.index) return;
+
+			counter.current.index = counter.current.index - 1;
 		}
 
 		const previous = movePreviousValues(0);
@@ -207,7 +189,6 @@ const TicTacToe = () => {
 		if (replaying) return true;
 		const areThereValues = isThereAnyValue();
 
-		// TODO: CHEQUEAR PARA DISMINUIR ESTO:
 		if (!areThereValues && isInPast) return false;
 		if (areThereValues && isInPast) return false;
 		if (areThereValues && !isInPast) return false;
@@ -216,9 +197,9 @@ const TicTacToe = () => {
 	};
 
 	return (
-		<div className="tictactoeContainer">
-			<div className="tictactoeContainer__controlsContainer">
-				<div className="tictactoeContainer__controlsContainer__board">
+		<div className='tictactoeContainer'>
+			<div className='tictactoeContainer__controlsContainer'>
+				<div className='tictactoeContainer__controlsContainer__board'>
 					{cells.map((cell, index) => (
 						<Square
 							key={index}
@@ -227,7 +208,7 @@ const TicTacToe = () => {
 						/>
 					))}
 				</div>
-				<div className="tictactoeContainer__controlsContainer__buttonsContainer">
+				<div className='tictactoeContainer__controlsContainer__buttonsContainer'>
 					<Button
 						eventHandler={() => goToTheNextStep()}
 						active={!canGoToTheFuture}
@@ -261,7 +242,7 @@ const TicTacToe = () => {
 					/>
 
 					<p>Next to move:</p>
-					<div className="square">
+					<div className='square'>
 						<Square content={turn} />
 					</div>
 
@@ -274,7 +255,7 @@ const TicTacToe = () => {
 			</div>
 
 			{winner && (
-				<div className="tictactoeContainer__winner">
+				<div className='tictactoeContainer__winner'>
 					<p>
 						🎊 <span>{winner}</span> is the winner! 🎉
 					</p>

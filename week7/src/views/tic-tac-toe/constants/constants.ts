@@ -1,11 +1,10 @@
-export type WinningCombinations = {
+export type WinningCombinationsInterface = {
 	along: number[][];
 	down: number[][];
 	diagnol: number[][];
 };
 
-export const WinningCombinations: WinningCombinations = {
-	//combinaciones ganadoras
+export const WinningCombinations: WinningCombinationsInterface = {
 	along: [
 		[0, 1, 2],
 		[3, 4, 5],

@@ -17,7 +17,6 @@ function ColoredTimeMachine() {
 	const [presentColor, setPresentColor] = useState<string | null>('');
 
 	const [isInPast, setIsInPast] = useState(false);
-	const [previous, setPrevious] = useState<string | undefined | null>(''); //! TODO: me sirve para ver el valor de previousValue en la devtools. No tiene ningun otro uso. Eliminar después de las pruebas.
 
 	const [
 		previousValue,
@@ -32,8 +31,6 @@ function ColoredTimeMachine() {
 	] = useTimeMachine(isInPast ? null : presentColor);
 
 	useEffect(() => {
-		setPrevious(previousValue); //! TODO: sirve solo para ver el valor previo en dev tools. Eliminar terminadas las pruebas.
-
 		if (!canGoToTheFuture) setIsInPast(false);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,7 +51,7 @@ function ColoredTimeMachine() {
 	};
 
 	const goToThePreviousValue = () => {
-		const previous = movePreviousValues(0); // esta función se encarga de pasar a presente y a futuro los valores del pasado.
+		const previous = movePreviousValues(0);
 
 		if (previous || previous === '') {
 			if (previousValue || previousValue === '') {
@@ -98,8 +95,8 @@ function ColoredTimeMachine() {
 	};
 
 	return (
-		<div className="coloredContainer">
-			<div className="coloredContainer__grid-container">
+		<div className='coloredContainer'>
+			<div className='coloredContainer__grid-container'>
 				{colorSquares.map((square) => (
 					<Square
 						key={square.id}
@@ -109,7 +106,7 @@ function ColoredTimeMachine() {
 					/>
 				))}
 			</div>
-			<div className="coloredContainer__button-container">
+			<div className='coloredContainer__button-container'>
 				{Object.values(buttons).map((button) => (
 					<Button
 						key={button.content}

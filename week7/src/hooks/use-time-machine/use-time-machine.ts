@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Values<T> {
 	present: T;
@@ -52,12 +52,6 @@ export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 			past: [],
 		};
 
-		// if (history.present === null) {
-		// 	// first operation to set value
-		// 	console.log('me ejecuto en algun momento?');
-		// 	return setHistory(newHistory);
-		// }
-
 		setCompleteHistory([value, history.present, ...history.past]);
 
 		setHistory({
@@ -67,19 +61,10 @@ export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 	};
 
 	const getPreviousValue = (n: number) => {
-		// const completeHistory = [
-		// 	...history.future,
-		// 	history.present,
-		// 	...history.past,
-		// ];
-		// console.log([...history.future, history.present, ...history.past]);
-		// console.log(n);
 		return completeHistory[n];
 	};
 
 	const movePreviousValues = (n: number) => {
-		// if (historyRef.current) {
-		// const { past } = historyRef.current;
 		if (!history.past.length) return;
 		const lastPrevious = history.past[n];
 		const newPast = history.past.slice(n + 1);
@@ -94,12 +79,9 @@ export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 			future: newFuture.concat(history.future),
 		});
 		return lastPrevious;
-		// }
 	};
 
 	const getNextValue = () => {
-		// if (historyRef.current) {
-		// const { future } = historyRef.current;
 		if (!history.future.length) return;
 
 		const next = history.future[0];
@@ -114,13 +96,9 @@ export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 			future: newFuture,
 		});
 		return next;
-		// }
 	};
 
 	const getPresentValue = () => {
-		// if (historyRef.current) {
-		// const { future, past } = historyRef.current;
-
 		if (!history.future.length) return;
 
 		const newPresent = history.future[history.future.length - 1];
@@ -139,7 +117,6 @@ export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 			future: newFuture,
 		});
 		return newPresent;
-		// }
 	};
 
 	const reset = () => {
@@ -153,7 +130,6 @@ export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 	};
 
 	return [
-		// history.past[0] ? history.past[0] : undefined,
 		history.past[0] !== undefined ? history.past[0] : undefined,
 		getPreviousValue,
 		movePreviousValues,

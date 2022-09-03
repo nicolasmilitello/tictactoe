@@ -10,8 +10,8 @@ export default function RoutesComponent() {
 		<div>
 			<NavBar />
 			<Routes>
-				<Route path="/" element={<ColoredTimeMachine />} />
-				<Route path="/tic-tac-toe" element={<TicTacToe />} />
+				<Route path='/' element={<ColoredTimeMachine />} />
+				<Route path='/tic-tac-toe' element={<TicTacToe />} />
 			</Routes>
 		</div>
 	);
