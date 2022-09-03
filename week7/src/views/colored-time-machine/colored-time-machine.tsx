@@ -14,7 +14,7 @@ import useTimeMachine from '../../hooks/use-time-machine/use-time-machine';
 import './colored-time-machine.styles.scss';
 
 function ColoredTimeMachine() {
-	const [presentColor, setPresentColor] = useState<string | null>(null);
+	const [presentColor, setPresentColor] = useState<string | null>('');
 
 	const [isInPast, setIsInPast] = useState(false);
 	const [previous, setPrevious] = useState<string | undefined | null>(''); //! TODO: me sirve para ver el valor de previousValue en la devtools. No tiene ningun otro uso. Eliminar después de las pruebas.
@@ -40,14 +40,24 @@ function ColoredTimeMachine() {
 	}, [previousValue]);
 
 	const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-		if (isInPast) return;
+		if (isInPast) {
+			alert(
+				`Please click on resume button before clicking other square.`
+			);
+			return;
+		}
+
+		if ((e.target as HTMLDivElement).id === presentColor)
+			alert(`You can't select the same color twice in a row.`);
+
 		setPresentColor((e.target as HTMLDivElement).id);
 	};
 
 	const goToThePreviousValue = () => {
 		const previous = movePreviousValues(0); // esta función se encarga de pasar a presente y a futuro los valores del pasado.
-		if (previous) {
-			if (previousValue) {
+
+		if (previous || previous === '') {
+			if (previousValue || previousValue === '') {
 				setPresentColor(previousValue);
 			}
 			setIsInPast(true);

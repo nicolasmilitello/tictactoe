@@ -85,13 +85,23 @@ const TicTacToe = () => {
 	};
 
 	const handleClick = (num: number) => {
-		if (isInPast || winner) return;
+		if (winner) {
+			alert(
+				`The game is over. Please click on restart button to play again.`
+			);
+			return;
+		}
+
+		if (isInPast) {
+			alert(`Please click the resume button to continue playing.`);
+			return;
+		}
 
 		counter.current.counter = counter.current.counter + 1;
 		counter.current.index = counter.current.index + 1;
 
 		if (cells[num] !== '') {
-			alert('already clicked');
+			alert(`You can't click the same square twice.`);
 			return;
 		}
 
@@ -116,6 +126,15 @@ const TicTacToe = () => {
 
 	const goToThePreviousStep = () => {
 		if (replaying) return;
+
+		if (winner) {
+			if (counter.current.index) {
+				counter.current.index = counter.current.index - 1;
+			} else {
+				return;
+			}
+		}
+
 		const previous = movePreviousValues(0);
 
 		if (previous) {
@@ -126,6 +145,10 @@ const TicTacToe = () => {
 
 	const goToTheNextStep = () => {
 		const next = getNextValue();
+
+		if (winner && counter.current.index < counter.current.counter) {
+			counter.current.index = counter.current.index + 1;
+		}
 
 		if (next) {
 			setCells(next);
@@ -227,7 +250,13 @@ const TicTacToe = () => {
 
 					<Button
 						eventHandler={() => goToThePreviousStep()}
-						active={replaying ? true : !canGoToThePast}
+						active={
+							replaying
+								? true
+								: counter.current.index
+								? !canGoToThePast
+								: true
+						}
 						content={'PREVIOUS'}
 					/>
 

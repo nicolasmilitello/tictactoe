@@ -22,9 +22,9 @@ type tupla<T> = [
 export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 	const [needLoadValue, setNeedLoadValue] = useState(true);
 
-	const [value] = useState<T>(initialValue); // esto me trae el primer valor y lo congela, y lo uso para el reseteo ya que sino se agrega el último valor al presente o al pasado y no puedo encontrar porqué no se actualiza el valor.
+	const [value] = useState<T>(initialValue);
 
-	const [completeHistory, setCompleteHistory] = useState<T[]>([]);
+	const [completeHistory, setCompleteHistory] = useState<T[]>([initialValue]);
 
 	const [history, setHistory] = useState<Values<T>>({
 		past: [],
@@ -32,22 +32,17 @@ export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 		future: [],
 	});
 
-	const historyRef = useRef<Values<T>>();
-
-	historyRef.current = history;
-	const { present, past, future } = history;
-
 	useEffect(() => {
 		if (needLoadValue) {
 			updateValue(initialValue);
 		}
 		setNeedLoadValue(true);
-		setCompleteHistory([initialValue, ...completeHistory]);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialValue]);
 
 	const updateValue = (value: T | null) => {
-		if (value === null || value === present) {
+		if (value === null || value === history.present) {
 			return;
 		}
 
@@ -57,82 +52,94 @@ export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 			past: [],
 		};
 
-		if (present === null) {
-			// first operation to set value
-			return setHistory(newHistory);
-		}
+		// if (history.present === null) {
+		// 	// first operation to set value
+		// 	console.log('me ejecuto en algun momento?');
+		// 	return setHistory(newHistory);
+		// }
 
-		return setHistory({
+		setCompleteHistory([value, history.present, ...history.past]);
+
+		setHistory({
 			...newHistory,
-			past: [present, ...past],
+			past: [history.present, ...history.past],
 		});
 	};
 
 	const getPreviousValue = (n: number) => {
-		const completeHistory = [...future, present, ...past];
+		// const completeHistory = [
+		// 	...history.future,
+		// 	history.present,
+		// 	...history.past,
+		// ];
+		// console.log([...history.future, history.present, ...history.past]);
+		// console.log(n);
 		return completeHistory[n];
 	};
 
 	const movePreviousValues = (n: number) => {
-		if (historyRef.current) {
-			const { past } = historyRef.current;
-			if (!past.length) return;
-			const lastPrevious = past[n];
-			const newPast = past.slice(n + 1);
+		// if (historyRef.current) {
+		// const { past } = historyRef.current;
+		if (!history.past.length) return;
+		const lastPrevious = history.past[n];
+		const newPast = history.past.slice(n + 1);
 
-			const newFuture = [present];
-			const newPresent = lastPrevious;
+		const newFuture = [history.present];
+		const newPresent = lastPrevious;
 
-			setHistory({
-				...history,
-				past: newPast,
-				present: newPresent,
-				future: newFuture.concat(future),
-			});
-			return lastPrevious;
-		}
+		setHistory({
+			...history,
+			past: newPast,
+			present: newPresent,
+			future: newFuture.concat(history.future),
+		});
+		return lastPrevious;
+		// }
 	};
 
 	const getNextValue = () => {
-		if (historyRef.current) {
-			const { future } = historyRef.current;
-			if (!future.length) return;
+		// if (historyRef.current) {
+		// const { future } = historyRef.current;
+		if (!history.future.length) return;
 
-			const next = future[0];
-			const newFuture = future.slice(1);
-			const newPast = [present, ...past];
-			const newPresent = next;
+		const next = history.future[0];
+		const newFuture = history.future.slice(1);
+		const newPast = [history.present, ...history.past];
+		const newPresent = next;
 
-			setHistory({
-				...history,
-				past: newPast,
-				present: newPresent,
-				future: newFuture,
-			});
-			return next;
-		}
+		setHistory({
+			...history,
+			past: newPast,
+			present: newPresent,
+			future: newFuture,
+		});
+		return next;
+		// }
 	};
 
 	const getPresentValue = () => {
-		if (historyRef.current) {
-			const { future, past } = historyRef.current;
+		// if (historyRef.current) {
+		// const { future, past } = historyRef.current;
 
-			if (!future.length) return;
+		if (!history.future.length) return;
 
-			const newPresent = future[future.length - 1];
-			const futureWithoutNewPresent = future.slice(0, future.length - 1);
-			const newFuture = [] as T[];
-			futureWithoutNewPresent.reverse().push(present);
-			const newPast = futureWithoutNewPresent.concat(past);
+		const newPresent = history.future[history.future.length - 1];
+		const futureWithoutNewPresent = history.future.slice(
+			0,
+			history.future.length - 1
+		);
+		const newFuture = [] as T[];
+		futureWithoutNewPresent.reverse().push(history.present);
+		const newPast = futureWithoutNewPresent.concat(history.past);
 
-			setHistory({
-				...history,
-				past: newPast,
-				present: newPresent,
-				future: newFuture,
-			});
-			return newPresent;
-		}
+		setHistory({
+			...history,
+			past: newPast,
+			present: newPresent,
+			future: newFuture,
+		});
+		return newPresent;
+		// }
 	};
 
 	const reset = () => {
@@ -146,16 +153,17 @@ export default function useTimeMachine<T>(initialValue: T): tupla<T> {
 	};
 
 	return [
-		history.past[0] ? history.past[0] : undefined,
+		// history.past[0] ? history.past[0] : undefined,
+		history.past[0] !== undefined ? history.past[0] : undefined,
 		getPreviousValue,
 		movePreviousValues,
 		getNextValue,
 		getPresentValue,
 		reset,
 		{
-			canGoToThePast: history.past[0] ? true : false,
+			canGoToThePast: history.past[0] !== undefined ? true : false,
 			canGoToTheFuture: history.future[0] ? true : false,
-			amIThePresent: !future.length,
+			amIThePresent: !history.future.length,
 		},
 	];
 }
