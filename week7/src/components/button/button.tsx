@@ -1,6 +1,6 @@
 import React from 'react';
 
-// //* styles
+//* styles
 import './button.styles.scss';
 
 type ButtonProps = {
@@ -14,7 +14,6 @@ function Button({ eventHandler, active, content }: ButtonProps) {
 		<button
 			onClick={eventHandler}
 			className={active ? 'disabled-button' : undefined}
-			// disabled={active}
 		>
 			{content}
 		</button>
