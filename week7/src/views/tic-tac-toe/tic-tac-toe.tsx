@@ -8,16 +8,17 @@ import Button from '../../components/button/button';
 import {
 	WinningCombinations,
 	WinningCombinationsInterface,
-} from './constants/constants';
+} from '../../constants/tic-tac-toe';
 
 //* custom hook
 import useTimeMachine from '../../hooks/use-time-machine/use-time-machine';
 
 //* styles
 import './tic-tac-toe.styles.scss';
+import { isThereAWinner } from './helpers/is-there-a-winner';
 
 // types
-type SquareValue = 'x' | 'o' | '';
+export type SquareValue = 'x' | 'o' | '';
 
 const TicTacToe = () => {
 	const [turn, setTurn] = useState('x');
@@ -55,13 +56,7 @@ const TicTacToe = () => {
 			WinningCombinations[
 				combination as keyof WinningCombinationsInterface
 			].forEach((pattern) => {
-				if (
-					squares[pattern[0]] !== '' &&
-					squares[pattern[1]] !== '' &&
-					squares[pattern[2]] !== '' &&
-					squares[pattern[0]] === squares[pattern[1]] &&
-					squares[pattern[1]] === squares[pattern[2]]
-				) {
+				if (isThereAWinner(squares, pattern)) {
 					setWinner(squares[pattern[0]]);
 				}
 			});
@@ -69,7 +64,7 @@ const TicTacToe = () => {
 	};
 
 	const handleClick = (num: number) => {
-		if (winner) {
+		if (winner || (!winner && !cells.includes(''))) {
 			alert(
 				`The game is over. Please click on restart button to play again.`
 			);
