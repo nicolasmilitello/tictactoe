@@ -5,7 +5,7 @@ import Square from '../../components/square/square';
 import Button from '../../components/button/button';
 
 //* constants
-import { colorSquares } from './constants/constants';
+import { colorSquares } from '../../constants/colored-time-machine';
 
 //* custom hook
 import useTimeMachine from '../../hooks/use-time-machine/use-time-machine';
