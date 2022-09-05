@@ -102,6 +102,7 @@ const TicTacToe = () => {
 
 	const handleRestart = () => {
 		setWinner('');
+		setIsTie(false);
 		setCells(Array(9).fill(''));
 	};
 
