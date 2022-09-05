@@ -194,9 +194,9 @@ const TicTacToe = () => {
 	};
 
 	return (
-		<div className="tictactoeContainer">
-			<div className="tictactoeContainer__controlsContainer">
-				<div className="tictactoeContainer__controlsContainer__board">
+		<div className='tictactoeContainer'>
+			<div className='tictactoeContainer__controlsContainer'>
+				<div className='tictactoeContainer__controlsContainer__board'>
 					{cells.map((cell, index) => (
 						<Square
 							key={index}
@@ -205,7 +205,7 @@ const TicTacToe = () => {
 						/>
 					))}
 				</div>
-				<div className="tictactoeContainer__controlsContainer__buttonsContainer">
+				<div className='tictactoeContainer__controlsContainer__buttonsContainer'>
 					<Button
 						eventHandler={() => goToTheNextStep()}
 						active={!canGoToTheFuture}
@@ -239,7 +239,7 @@ const TicTacToe = () => {
 					/>
 
 					<p>Next to move:</p>
-					<div className="square">
+					<div className='square'>
 						<Square content={turn} />
 					</div>
 
@@ -252,7 +252,7 @@ const TicTacToe = () => {
 			</div>
 
 			{winner && (
-				<div className="tictactoeContainer__winner">
+				<div className='tictactoeContainer__winner'>
 					<p>
 						🎊 <span>{winner}</span> is the winner! 🎉
 					</p>
@@ -260,7 +260,7 @@ const TicTacToe = () => {
 			)}
 
 			{isTie && (
-				<div className="tictactoeContainer__winner">
+				<div className='tictactoeContainer__winner'>
 					<p>There was a tie! 🤷‍♂️</p>
 				</div>
 			)}
