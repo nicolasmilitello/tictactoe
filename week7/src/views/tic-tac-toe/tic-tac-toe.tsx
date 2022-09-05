@@ -31,6 +31,8 @@ const TicTacToe = () => {
 
 	const [isInPast, setIsInPast] = useState(false);
 
+	const [isTie, setIsTie] = useState(false);
+
 	const counter = useRef({
 		counter: 0,
 		index: 0,
@@ -56,7 +58,7 @@ const TicTacToe = () => {
 			WinningCombinations[
 				combination as keyof WinningCombinationsInterface
 			].forEach((pattern) => {
-				if (isThereAWinner(squares, pattern)) {
+				if (isThereAWinner(squares, pattern, setIsTie)) {
 					setWinner(squares[pattern[0]]);
 				}
 			});
@@ -76,12 +78,12 @@ const TicTacToe = () => {
 			return;
 		}
 
-		counter.current.counter = counter.current.counter + 1;
-		counter.current.index = counter.current.index + 1;
-
 		if (cells[num] !== '') {
 			alert(`You can't click the same square twice.`);
 			return;
+		} else {
+			counter.current.counter = counter.current.counter + 1;
+			counter.current.index = counter.current.index + 1;
 		}
 
 		let squares = [...cells];
@@ -173,7 +175,7 @@ const TicTacToe = () => {
 	};
 
 	const isThereAnyValue = () => {
-		const values = Object.values(cells);
+		const values = cells;
 
 		const existingValues = values.filter((value) => value !== '');
 
@@ -192,9 +194,9 @@ const TicTacToe = () => {
 	};
 
 	return (
-		<div className='tictactoeContainer'>
-			<div className='tictactoeContainer__controlsContainer'>
-				<div className='tictactoeContainer__controlsContainer__board'>
+		<div className="tictactoeContainer">
+			<div className="tictactoeContainer__controlsContainer">
+				<div className="tictactoeContainer__controlsContainer__board">
 					{cells.map((cell, index) => (
 						<Square
 							key={index}
@@ -203,7 +205,7 @@ const TicTacToe = () => {
 						/>
 					))}
 				</div>
-				<div className='tictactoeContainer__controlsContainer__buttonsContainer'>
+				<div className="tictactoeContainer__controlsContainer__buttonsContainer">
 					<Button
 						eventHandler={() => goToTheNextStep()}
 						active={!canGoToTheFuture}
@@ -237,7 +239,7 @@ const TicTacToe = () => {
 					/>
 
 					<p>Next to move:</p>
-					<div className='square'>
+					<div className="square">
 						<Square content={turn} />
 					</div>
 
@@ -250,10 +252,16 @@ const TicTacToe = () => {
 			</div>
 
 			{winner && (
-				<div className='tictactoeContainer__winner'>
+				<div className="tictactoeContainer__winner">
 					<p>
 						🎊 <span>{winner}</span> is the winner! 🎉
 					</p>
+				</div>
+			)}
+
+			{isTie && (
+				<div className="tictactoeContainer__winner">
+					<p>There was a tie! 🤷‍♂️</p>
 				</div>
 			)}
 		</div>
